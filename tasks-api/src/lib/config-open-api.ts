@@ -4,7 +4,9 @@ import { Scalar } from "@scalar/hono-api-reference";
 import type { AppOpenAPI } from "./types.js";
 
 export default function createAppOpenAPI(app: AppOpenAPI) {
-  app.doc("/docs", {
+  const DOCS = "/docs";
+
+  app.doc(DOCS, {
     openapi: "3.0.0",
     info: {
       title: "Hono OpenAPI Example",
@@ -14,7 +16,7 @@ export default function createAppOpenAPI(app: AppOpenAPI) {
 
   });
 
-  app.get("/docs/ui", swaggerUI({ url: "/docs" }));
+  app.get(`${DOCS}/ui`, swaggerUI({ url: DOCS }));
 
-  app.get("/scalar", Scalar({ url: "/doc" }));
+  app.get(`${DOCS}/scalar`, Scalar({ url: DOCS }));
 }
