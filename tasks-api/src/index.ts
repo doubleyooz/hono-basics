@@ -1,22 +1,19 @@
 import { serve } from "@hono/node-server";
-import { Hono } from "hono";
 
-import env from "./env";
-import notFound from "./middlewares/not-found.js";
-import onError from "./middlewares/on-error.js";
-import { pinoLogger } from "./middlewares/pino-logger.js";
+import env from "./env.js";
+import createApp from "./lib/create-app.js";
+import indexRoutes from "./routes/index.route.js";
 
-const app = new Hono();
-
+const app = createApp();
 const port = env.PORT | 3000;
 
-app.get("/", (c) => {
-  return c.text("Hello Hono!");
-});
+const routes = [
+  indexRoutes,
+];
 
-app.use(pinoLogger());
-app.notFound(notFound);
-app.onError(onError);
+routes.forEach((route) => {
+  app.route("/", route);
+});
 
 serve({
   fetch: app.fetch,
