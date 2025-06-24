@@ -100,6 +100,9 @@ export const REQUESTED_RANGE_NOT_SATISFIABLE = 416;
 // 417: The server cannot meet the requirements of the Expect request-header field.
 export const EXPECTATION_FAILED = 417;
 
+// 422: The request was well-formed but was unable to be followed due to semantic errors.
+export const UNPROCESSABLE_ENTITY = 422;
+
 // 500: A generic error message, given when an unexpected condition was encountered.
 export const INTERNAL_SERVER_ERROR = 500;
 

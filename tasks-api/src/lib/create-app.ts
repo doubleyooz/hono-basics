@@ -2,13 +2,14 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 
 import type { AppBindings } from "./types.js";
 
-import notFound from "../middlewares/not-found.js";
-import onError from "../middlewares/on-error.js";
 import { pinoLogger } from "../middlewares/pino-logger.js";
 import configureOpenAPI from "./config-open-api.js";
+import defaultHook from "./middlewares/default-hook.js";
+import notFound from "./middlewares/not-found.js";
+import onError from "./middlewares/on-error.js";
 
 export function createRouter() {
-  return new OpenAPIHono<AppBindings>({ strict: false });
+  return new OpenAPIHono<AppBindings>({ strict: false, defaultHook });
 }
 
 export default function createApp() {

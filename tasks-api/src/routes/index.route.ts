@@ -1,13 +1,15 @@
 import { createRoute, z } from "@hono/zod-openapi";
 
 import { createRouter } from "../lib/create-app.js";
+import { OK } from "../utils/http-status-codes.js";
 
 const router = createRouter()
   .openapi(createRoute({
+    tags: ["Index"],
     method: "get",
     path: "/",
     responses: {
-      200: {
+      [OK]: {
         description: "Tasks API index",
         content: {
           "application/json": {
@@ -20,6 +22,6 @@ const router = createRouter()
       },
     },
   }), (c) => {
-    return c.json({ message: "Tasks API" });
+    return c.json({ message: "Tasks API" }, OK);
   });
 export default router;
