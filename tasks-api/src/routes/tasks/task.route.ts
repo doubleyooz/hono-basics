@@ -92,6 +92,29 @@ export const patch = createRoute({
   },
 });
 
+export const toggleDone = createRoute({
+  path: "/tasks/{id}/toggle",
+  method: "patch",
+  request: {
+    params: IdParamsSchema,
+  },
+  tags,
+  responses: {
+    [HttpStatusCodes.OK]: jsonContent(
+      selectTasksSchema,
+      "The updated task with toggled done status",
+    ),
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(
+      notFoundSchema,
+      "Task not found",
+    ),
+    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
+      createErrorSchema(IdParamsSchema),
+      "Invalid id error",
+    ),
+  },
+});
+
 export const remove = createRoute({
   path: "/tasks/{id}",
   method: "delete",
@@ -119,3 +142,4 @@ export type CreateRoute = typeof create;
 export type GetOneRoute = typeof getOne;
 export type PatchRoute = typeof patch;
 export type RemoveRoute = typeof remove;
+export type ToggleDoneRoute = typeof toggleDone;
