@@ -19,14 +19,10 @@ const list: AppRouterHandler<ListRoute> = async (c) => {
 const getById: AppRouterHandler<GetOneRoute> = async (c) => {
   const id = Number.parseInt(c.req.param("id"));
 
-  if (Number.isNaN(id)) {
-    return c.json({ error: "Invalid task ID" }, HttpStatusCodes.BAD_REQUEST);
-  }
-
   const result = await taskService.getById(id);
 
-  if (!result.result) {
-    return c.json({ error: "Task not found" }, HttpStatusCodes.NOT_FOUND);
+  if (!result) {
+    return c.json({ message: "Task not found" }, HttpStatusCodes.NOT_FOUND);
   }
 
   return c.json(result, HttpStatusCodes.OK);
@@ -35,31 +31,27 @@ const getById: AppRouterHandler<GetOneRoute> = async (c) => {
 const update: AppRouterHandler<PatchRoute> = async (c) => {
   const id = Number.parseInt(c.req.param("id"));
 
-  if (Number.isNaN(id)) {
-    return c.json({ error: "Invalid task ID" }, HttpStatusCodes.BAD_REQUEST);
-  }
-
   const body = await c.req.json();
   const result = await taskService.update(id, body);
 
-  if (!result.result) {
-    return c.json({ error: "Task not found" }, HttpStatusCodes.NOT_FOUND);
+  if (!result) {
+    return c.json({ message: "Task not found" }, HttpStatusCodes.NOT_FOUND);
   }
 
-  return c.json(result.result, HttpStatusCodes.OK);
+  return c.json(result, HttpStatusCodes.OK);
 };
 
 const remove: AppRouterHandler<RemoveRoute> = async (c) => {
   const id = Number.parseInt(c.req.param("id"));
 
   if (Number.isNaN(id)) {
-    return c.json({ error: "Invalid task ID" }, HttpStatusCodes.BAD_REQUEST);
+    return c.json({ message: "Invalid task ID" }, HttpStatusCodes.BAD_REQUEST);
   }
 
   const result = await taskService.remove(id);
 
-  if (!result.result) {
-    return c.json({ error: "Task not found" }, HttpStatusCodes.NOT_FOUND);
+  if (!result) {
+    return c.json({ message: "Task not found" }, HttpStatusCodes.NOT_FOUND);
   }
 
   return c.json({ message: "Task deleted successfully" }, HttpStatusCodes.OK);
@@ -68,14 +60,10 @@ const remove: AppRouterHandler<RemoveRoute> = async (c) => {
 const toggleDone: AppRouterHandler<ToggleDoneRoute> = async (c) => {
   const id = Number.parseInt(c.req.param("id"));
 
-  if (Number.isNaN(id)) {
-    return c.json({ error: "Invalid task ID" }, HttpStatusCodes.BAD_REQUEST);
-  }
-
   const result = await taskService.toggleDone(id);
 
-  if (!result.result) {
-    return c.json({ error: "Task not found" }, HttpStatusCodes.NOT_FOUND);
+  if (!result) {
+    return c.json({ message: "Task not found" }, HttpStatusCodes.NOT_FOUND);
   }
 
   return c.json(result, HttpStatusCodes.OK);

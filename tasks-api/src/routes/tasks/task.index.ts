@@ -4,9 +4,10 @@ import * as routes from "./task.route.js";
 
 const router = createRouter()
   .openapi(routes.list, controllers.list)
-  .openapi(routes.create, controllers.create);
-  // .openapi(routes.getOne, controllers.getOne)
-  // .openapi(routes.patch, controllers.patch)
-  // .openapi(routes.remove, controllers.remove);
+  .openapi(routes.create, controllers.create)
+  .openapi(routes.getOne, controllers.getById)
+  .openapi(routes.patch, controllers.update)
+  .openapi(routes.remove, controllers.remove)
+  .openapi(routes.toggleDone, controllers.toggleDone);
 
 export default router;

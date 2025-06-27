@@ -30,7 +30,7 @@ export const create = createRoute({
   },
   tags,
   responses: {
-    [HttpStatusCodes.OK]: jsonContent(
+    [HttpStatusCodes.CREATED]: jsonContent(
       selectTasksSchema,
       "The created task",
     ),
@@ -57,7 +57,7 @@ export const getOne = createRoute({
       notFoundSchema,
       "Task not found",
     ),
-    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
+    [HttpStatusCodes.BAD_REQUEST]: jsonContent(
       createErrorSchema(IdParamsSchema),
       "Invalid id error",
     ),
@@ -108,7 +108,7 @@ export const toggleDone = createRoute({
       notFoundSchema,
       "Task not found",
     ),
-    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
+    [HttpStatusCodes.BAD_REQUEST]: jsonContent(
       createErrorSchema(IdParamsSchema),
       "Invalid id error",
     ),
