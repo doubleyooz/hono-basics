@@ -1,4 +1,5 @@
-import * as HttpStatusPhrases from "../utils/http-status-messages.js";
+import * as HttpStatusPhrases from "@doubleyooz/wardenhttp/http-status-messages";
+
 import { createMessageObjectSchema } from "../utils/schema.util.js";
 
 export const ZOD_ERROR_MESSAGES = {

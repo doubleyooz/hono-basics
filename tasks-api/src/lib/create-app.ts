@@ -1,6 +1,8 @@
+import type { Schema } from "hono";
+
 import { OpenAPIHono } from "@hono/zod-openapi";
 
-import type { AppBindings } from "./types.js";
+import type { AppBindings, AppOpenAPI } from "./types.js";
 
 import { pinoLogger } from "../middlewares/pino-logger.js";
 import configureOpenAPI from "./config-open-api.js";
@@ -22,4 +24,8 @@ export default function createApp() {
   configureOpenAPI(app);
 
   return app;
+}
+
+export function createTestApp<S extends Schema>(router: AppOpenAPI<S>) {
+  return createApp().route("/", router);
 }

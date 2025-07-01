@@ -1,7 +1,9 @@
+import * as HttpStatusCodes from "@doubleyooz/wardenhttp/http-status-codes";
+import * as HttpStatusMessages from "@doubleyooz/wardenhttp/http-status-messages";
+
 import type { AppRouterHandler } from "../../lib/types.js";
 import type { CreateRoute, GetOneRoute, ListRoute, PatchRoute, RemoveRoute, ToggleDoneRoute } from "./task.route.js";
 
-import * as HttpStatusCodes from "../../utils/http-status-codes.js";
 import * as taskService from "./task.service.js";
 
 const create: AppRouterHandler<CreateRoute> = async (c) => {
@@ -22,7 +24,7 @@ const getById: AppRouterHandler<GetOneRoute> = async (c) => {
   const result = await taskService.getById(id);
 
   if (!result) {
-    return c.json({ message: "Task not found" }, HttpStatusCodes.NOT_FOUND);
+    return c.json({ message: HttpStatusMessages.NOT_FOUND }, HttpStatusCodes.NOT_FOUND);
   }
 
   return c.json(result, HttpStatusCodes.OK);
@@ -35,7 +37,7 @@ const update: AppRouterHandler<PatchRoute> = async (c) => {
   const result = await taskService.update(id, body);
 
   if (!result) {
-    return c.json({ message: "Task not found" }, HttpStatusCodes.NOT_FOUND);
+    return c.json({ message: HttpStatusMessages.NOT_FOUND }, HttpStatusCodes.NOT_FOUND);
   }
 
   return c.json(result, HttpStatusCodes.OK);
@@ -51,7 +53,7 @@ const remove: AppRouterHandler<RemoveRoute> = async (c) => {
   const result = await taskService.remove(id);
 
   if (!result) {
-    return c.json({ message: "Task not found" }, HttpStatusCodes.NOT_FOUND);
+    return c.json({ message: HttpStatusMessages.NOT_FOUND }, HttpStatusCodes.NOT_FOUND);
   }
 
   return c.json({ message: "Task deleted successfully" }, HttpStatusCodes.OK);
@@ -63,7 +65,7 @@ const toggleDone: AppRouterHandler<ToggleDoneRoute> = async (c) => {
   const result = await taskService.toggleDone(id);
 
   if (!result) {
-    return c.json({ message: "Task not found" }, HttpStatusCodes.NOT_FOUND);
+    return c.json({ message: HttpStatusMessages.NOT_FOUND }, HttpStatusCodes.NOT_FOUND);
   }
 
   return c.json(result, HttpStatusCodes.OK);

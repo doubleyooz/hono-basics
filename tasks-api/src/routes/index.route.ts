@@ -1,7 +1,7 @@
+import { OK } from "@doubleyooz/wardenhttp/http-status-codes";
 import { createRoute, z } from "@hono/zod-openapi";
 
 import { createRouter } from "../lib/create-app.js";
-import { OK } from "../utils/http-status-codes.js";
 
 const router = createRouter()
   .openapi(createRoute({

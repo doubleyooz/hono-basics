@@ -18,9 +18,13 @@ async function getAll() {
 }
 
 async function getById(id: number) {
-  const result = await db.select().from(tasks).where(eq(tasks.id, id));
+  const result = await db.query.tasks.findFirst({
+    where(fields, operators) {
+      return operators.eq(fields.id, id);
+    },
+  });
 
-  return result[0] || null;
+  return result || null;
 }
 
 async function update(id: number, updates: Partial<CreateTaskRequest>) {

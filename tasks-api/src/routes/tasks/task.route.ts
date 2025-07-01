@@ -1,8 +1,8 @@
+import * as HttpStatusCodes from "@doubleyooz/wardenhttp/http-status-codes";
 import { createRoute, z } from "@hono/zod-openapi";
 
 import { insertTasksSchema, patchTasksSchema, selectTasksSchema } from "../../db/schema.js";
 import { notFoundSchema } from "../../lib/constants.js";
-import * as HttpStatusCodes from "../../utils/http-status-codes.js";
 import { createErrorSchema, IdParamsSchema, jsonContent, jsonContentRequired } from "../../utils/schema.util.js";
 
 const tags = ["Tasks"];
