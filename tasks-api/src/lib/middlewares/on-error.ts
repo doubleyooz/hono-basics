@@ -1,7 +1,7 @@
 import type { ErrorHandler } from "hono";
-import type { StatusCode } from "hono/utils/http-status";
+import type { StatusCode } from "@doubleyooz/wardenhttp";
 
-import { INTERNAL_SERVER_ERROR, OK } from "../../utils/http-status-codes.js";
+import { INTERNAL_SERVER_ERROR, OK } from "@doubleyooz/wardenhttp";
 
 const onError: ErrorHandler = (err, c) => {
   const currentStatus = "status" in err

@@ -1,6 +1,6 @@
 import type { Hook } from "@hono/zod-openapi";
 
-import { UNPROCESSABLE_ENTITY } from "../../utils/http-status-codes.js";
+import { UNPROCESSABLE_ENTITY } from "@doubleyooz/wardenhttp";
 
 const defaultHook: Hook<any, any, any, any> = (result, c) => {
   if (!result.success) {
