@@ -1,11 +1,12 @@
 import { eq, sql } from "drizzle-orm";
 
-import type { CreateCalendar } from "../../db/schema.js";
+import type { CreateCalendar } from "../../db/schemas/calendars.schema.js";
 
 import { db } from "../../db/index.js";
-import { calendars } from "../../db/schema.js";
+import { calendars } from "../../db/schemas/calendars.schema.js";
 
 async function create(calendar: CreateCalendar) {
+  console.log("Inserting calendar into DB:", calendar);
   const result = await db.insert(calendars).values(calendar).returning();
 
   return result[0]; // Return the first (and only) inserted calendar

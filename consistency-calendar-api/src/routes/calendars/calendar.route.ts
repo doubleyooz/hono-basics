@@ -1,7 +1,7 @@
 import * as HttpStatusCodes from "@doubleyooz/wardenhttp/http-status-codes";
 import { createRoute, z } from "@hono/zod-openapi";
 
-import { insertCalendarSchema, patchCalendarSchema, selectCalendarSchema } from "../../db/schema.js";
+import { insertCalendarSchema, patchCalendarSchema, selectCalendarSchema } from "../../db/schemas/calendars.schema.js";
 import { notFoundSchema } from "../../lib/constants.js";
 import { createErrorSchema, IdParamsSchema, jsonContent, jsonContentRequired } from "../../utils/schema.util.js";
 
