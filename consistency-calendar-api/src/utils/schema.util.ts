@@ -30,7 +30,7 @@ function createErrorSchema<
 >(schema: T) {
   const { error } = schema.safeParse(
     schema._def.typeName
-    === z.ZodFirstPartyTypeKind.ZodArray
+    === z.ZodArray
       ? []
       : {},
   );
@@ -78,5 +78,6 @@ const IdParamsSchema = z.object({
     example: 42,
   }),
 });
+
 
 export { createErrorSchema, createMessageObjectSchema, IdParamsSchema, jsonContent, jsonContentRequired };

@@ -37,8 +37,8 @@ export const selectCalendarSchema = createSelectSchema(calendars).extend({
   userId: z.number().int().positive(),
   name: z.string().min(1).max(100),
   description: z.string().nullable(),
-  createdAt: z.string().datetime(),
-  updatedAt: z.string().datetime(),
+  createdAt: z.iso.datetime(),
+  updatedAt: z.iso.datetime(),
 });
 
 

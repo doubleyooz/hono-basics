@@ -33,7 +33,7 @@ export const entries = pgTable("entries", {
     .notNull()
     .references(() => calendars.id, { onDelete: "cascade" }),
   date: date("date", { mode: "date" }).notNull(),
-  state: text("state").notNull(),                   // or boxStateEnum("state").notNull()
+  state: boxStateEnum("state").notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true })
     .notNull()
     .default(sql`NOW()`)
@@ -47,16 +47,8 @@ export const selectEntrySchema = createSelectSchema(entries).extend({
   id: z.number().int().positive(),
   calendarId: z.number().int().positive(),
   date: z.string(),           // YYYY-MM-DD
-  state: z.enum([
-    "very easy",
-    "easy",
-    "medium",
-    "hard",
-    "very hard",
-    "defeated",
-    "none",
-  ] as const),
-  updatedAt: z.string().datetime().nullable(),
+  state: z.enum(boxStateEnum.enumValues),
+  updatedAt: z.iso.datetime().nullable(),
 });
 
 export type Entry = z.infer<typeof selectEntrySchema>;
@@ -64,27 +56,11 @@ export type Entry = z.infer<typeof selectEntrySchema>;
 export const insertEntrySchema = z.object({
   calendarId: z.number().int().positive(),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Expected YYYY-MM-DD"),
-  state: z.enum([
-    "very easy",
-    "easy",
-    "medium",
-    "hard",
-    "very hard",
-    "defeated",
-    "none",
-  ] as const),
+  state: z.enum(boxStateEnum.enumValues),
 }).strict();
 
 export const patchEntrySchema = z.object({
-  state: z.enum([
-    "very easy",
-    "easy",
-    "medium",
-    "hard",
-    "very hard",
-    "defeated",
-    "none",
-  ] as const).optional(),
+  state: z.enum(boxStateEnum.enumValues).optional(),
 });
 
 export type CreateEntry = z.infer<typeof insertEntrySchema>;
