@@ -1,12 +1,13 @@
 import * as HttpStatusCodes from "@doubleyooz/wardenhttp/http-status-codes";
 import { createRoute, z } from "@hono/zod-openapi";
 
-import { insertCalendarSchema, patchCalendarSchema, selectCalendarSchema } from "../../db/schemas/calendars.schema.js";
+import { insertEntrySchema, patchEntrySchema, selectEntrySchema } from "../../db/schemas/entries.schema.js";
 import { notFoundSchema } from "../../lib/constants.js";
 import { createErrorSchema, IdParamsSchema, jsonContent, jsonContentRequired } from "../../utils/schema.util.js";
 
-const tags = ["Calendars"];
-const path = "/calendars";
+const tags = ["Entries"];
+const path = "/entries";
+
 
 export const list = createRoute({
   path,
@@ -14,8 +15,8 @@ export const list = createRoute({
   tags,
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
-      z.array(selectCalendarSchema),
-      "The list of calendars",
+      z.array(selectEntrySchema),
+      "The list of entries",
     ),
   },
 });
@@ -25,18 +26,18 @@ export const create = createRoute({
   method: "post",
   request: {
     body: jsonContentRequired(
-      insertCalendarSchema,
-      "The calendar to create",
+      insertEntrySchema,
+      "The entry to create",
     ),
   },
   tags,
   responses: {
     [HttpStatusCodes.CREATED]: jsonContent(
-      selectCalendarSchema,
-      "The created calendar",
+      selectEntrySchema,
+      "The created entry",
     ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
-      createErrorSchema(insertCalendarSchema),
+      createErrorSchema(insertEntrySchema),
       "The validation error(s)",
     ),
   },
@@ -51,12 +52,12 @@ export const getOne = createRoute({
   tags,
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
-      selectCalendarSchema,
-      "The requested calendar",
+      selectEntrySchema,
+      "The requested entry",
     ),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       notFoundSchema,
-      "Calendar not found",
+      "Entry not found",
     ),
     [HttpStatusCodes.BAD_REQUEST]: jsonContent(
       createErrorSchema(IdParamsSchema),
@@ -71,22 +72,22 @@ export const patch = createRoute({
   request: {
     params: IdParamsSchema,
     body: jsonContentRequired(
-      patchCalendarSchema,
-      "The calendar updates",
+      patchEntrySchema,
+      "The entry updates",
     ),
   },
   tags,
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
-      selectCalendarSchema,
-      "The updated calendar",
+      selectEntrySchema,
+      "The updated entry",
     ),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       notFoundSchema,
-      "Calendar not found",
+      "Entry not found",
     ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
-      createErrorSchema(patchCalendarSchema)
+      createErrorSchema(patchEntrySchema)
         .or(createErrorSchema(IdParamsSchema)),
       "The validation error(s)",
     ),
@@ -102,11 +103,11 @@ export const remove = createRoute({
   tags,
   responses: {
     [HttpStatusCodes.NO_CONTENT]: {
-      description: "Calendar deleted",
+      description: "Entry deleted",
     },
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       notFoundSchema,
-      "Calendar not found",
+      "Entry not found",
     ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
       createErrorSchema(IdParamsSchema),

@@ -1,8 +1,8 @@
 import { Hono } from 'hono'
 import { auth } from '../../lib/auth.js'
-import type { AuthType } from '../../lib/auth.js'
+import type { AppBindings } from '../../lib/types.js'
 
-const router = new Hono<{ Bindings: AuthType }>({
+const router = new Hono<AppBindings>({
   strict: false,
 })
 

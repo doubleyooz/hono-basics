@@ -4,6 +4,7 @@ import env from "./env.js";
 import createApp from "./lib/create-app.js";
 import indexRoutes from "./routes/index.route.js";
 import calendarRoutes from "./routes/calendars/index.js";
+import entryRoutes from "./routes/entries/index.js";
 import authRoutes from "./routes/auth/auth.route.js";
 
 const app = createApp();
@@ -11,7 +12,9 @@ const port = env.PORT || 3000;
 
 const routes = [
   indexRoutes,
+  entryRoutes,
   calendarRoutes,
+  authRoutes
 ];
 
 routes.forEach((route) => {

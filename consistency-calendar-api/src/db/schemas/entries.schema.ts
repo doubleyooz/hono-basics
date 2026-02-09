@@ -32,7 +32,7 @@ export const entries = pgTable("entries", {
   calendarId: integer("calendar_id")
     .notNull()
     .references(() => calendars.id, { onDelete: "cascade" }),
-  date: date("date", { mode: "date" }).notNull(),
+  date: date("date", { mode: "string" }).notNull(),
   state: boxStateEnum("state").notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true })
     .notNull()
@@ -46,7 +46,7 @@ export const entries = pgTable("entries", {
 export const selectEntrySchema = createSelectSchema(entries).extend({
   id: z.number().int().positive(),
   calendarId: z.number().int().positive(),
-  date: z.string(),           // YYYY-MM-DD
+  date: z.iso.date(),           // YYYY-MM-DD
   state: z.enum(boxStateEnum.enumValues),
   updatedAt: z.iso.datetime().nullable(),
 });
@@ -55,7 +55,7 @@ export type Entry = z.infer<typeof selectEntrySchema>;
 
 export const insertEntrySchema = z.object({
   calendarId: z.number().int().positive(),
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Expected YYYY-MM-DD"),
+  date: z.iso.date(), 
   state: z.enum(boxStateEnum.enumValues),
 }).strict();
 
