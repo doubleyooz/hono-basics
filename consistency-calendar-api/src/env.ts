@@ -15,12 +15,18 @@ const EnvSchema = z.object({
   NODE_ENV: z.string().default("development"),
   PORT: z.coerce.number().default(9999),
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"]),
-  DATABASE_URL: z.string().url(),
+  DATABASE_URL: z.url(),
   DATABASE_AUTH_TOKEN: z.string().optional(),
+
+  GOOGLE_CLIENT_ID: z.string(),
+  GOOGLE_CLIENT_SECRET: z.string(),
+
+  BETTER_AUTH_URL: z.url(),
+
 }).superRefine((input, ctx) => {
   if (input.NODE_ENV === "production" && !input.DATABASE_AUTH_TOKEN) {
     ctx.addIssue({
-      code: z.ZodIssueCode.invalid_type,
+      code: "invalid_type",
       expected: "string",
       received: "undefined",
       path: ["DATABASE_AUTH_TOKEN"],

@@ -14,7 +14,7 @@ async function create(calendar: CreateCalendar) {
 
 async function getAll() {
   const result = await db.select().from(calendars);
-  return result;
+  return result ? result : [];
 }
 
 async function getById(id: number) {
