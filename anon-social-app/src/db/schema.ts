@@ -57,3 +57,4 @@ export const rateLimits = sqliteTable('rate_limits', {
   windowStart: integer('window_start', { mode: 'timestamp' }).notNull(),
   count: integer('count').notNull().default(0),
 });
+

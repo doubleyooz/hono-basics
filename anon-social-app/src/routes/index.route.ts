@@ -10,7 +10,7 @@ const router = createRouter()
     path: "/",
     responses: {
       [OK]: {
-        description: "Tasks API index",
+        description: "Pows API index",
         content: {
           "application/json": {
             schema: z.object({
@@ -22,6 +22,6 @@ const router = createRouter()
       },
     },
   }), (c) => {
-    return c.json({ message: "Tasks API" }, OK);
+    return c.json({ message: "Pows API" }, OK);
   });
 export default router;
