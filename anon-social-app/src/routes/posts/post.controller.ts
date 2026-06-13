@@ -2,13 +2,13 @@ import * as HttpStatusCodes from "@doubleyooz/wardenhttp/http-status-codes";
 import * as HttpStatusMessages from "@doubleyooz/wardenhttp/http-status-messages";
 
 import type { AppRouterHandler } from "../../lib/types.js";
-import type { CreateRoute, GetOneRoute, ListRoute, PatchRoute, RemoveRoute, RevokePowNonceRoute } from "./pow.route.js";
+import type { CreateRoute, GetOneRoute, ListRoute, PatchRoute, RemoveRoute } from "./post.route.js";
 
-import * as service from "./pow.service.js";
+import * as service from "./post.service.js";
 
 const create: AppRouterHandler<CreateRoute> = async (c) => {
   const body = await c.req.json();
-  console.log("Creating pow with body:", body);
+  console.log("Creating post with body:", body);
   const result = await service.create(body);
   return c.json(result, HttpStatusCodes.CREATED);
 };
@@ -47,19 +47,8 @@ const remove: AppRouterHandler<RemoveRoute> = async (c) => {
     return c.json({ message: HttpStatusMessages.NOT_FOUND }, HttpStatusCodes.NOT_FOUND);
   }
 
-  return c.json({ message: "Pow deleted successfully" }, HttpStatusCodes.OK);
+  return c.json({ message: "Post deleted successfully" }, HttpStatusCodes.OK);
 };
 
-const revokePowNonce: AppRouterHandler<RevokePowNonceRoute> = async (c) => {
-  const id = Number.parseInt(c.req.param("id"));
 
-  const result = await service.revokePowNonce(c.req.param("id"));
-
-  if (!result) {
-    return c.json({ message: HttpStatusMessages.NOT_FOUND }, HttpStatusCodes.NOT_FOUND);
-  }
-
-  return c.json(result, HttpStatusCodes.OK);
-};
-
-export { create, getById, list, remove, revokePowNonce, update };
+export { create, getById, list, remove, update };

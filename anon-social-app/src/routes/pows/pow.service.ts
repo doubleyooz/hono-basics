@@ -1,7 +1,7 @@
 import { eq, sql } from "drizzle-orm";
 
 import { powNonces } from "../../db/schema.js";
-import type { CreatePowRequest } from "../../db/schema.js";
+import type { CreatePowRequest } from "./pow.schema.js";
 
 import env from "../../env.js";
 import db from "../../db/index.js";
@@ -10,7 +10,7 @@ async function create(pow: CreatePowRequest) {
     const result = await db.insert(powNonces).values({
         challengeId: pow.challengeId,
         expiresAt: new Date(Date.now() + env.POW_WINDOW),
-        used: pow.used
+        fuel: pow.fuel
        
     }).returning();
 
@@ -51,14 +51,14 @@ async function remove(challengeId: string) {
     return result[0] || null;
 }
 
-async function markAsUsed(challengeId: string) {
+async function revokePowNonce(challengeId: string) {
     const result = await db
         .update(powNonces)
-        .set({ used: 1 })
+        .set({ revoked: true })
         .where(eq(powNonces.challengeId, challengeId))
         .returning();
 
     return result[0] || null;
 }
 
-export { create, getAll, getById, remove, markAsUsed, update };
+export { create, getAll, getById, remove, revokePowNonce, update };

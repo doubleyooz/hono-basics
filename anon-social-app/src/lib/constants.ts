@@ -2,6 +2,7 @@ import * as HttpStatusPhrases from "@doubleyooz/wardenhttp/http-status-messages"
 import { createMessageObjectSchema } from "../utils/schema.util.js";
 
 export const POWS = 'Pows'
+export const POSTS = 'Posts';
 
 export const ZOD_ERROR_MESSAGES = {
   REQUIRED: "Required",

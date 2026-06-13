@@ -1,43 +1,21 @@
 import * as HttpStatusCodes from "@doubleyooz/wardenhttp/http-status-codes";
 import { createRoute, z } from "@hono/zod-openapi";
 
-import { insertPowSchema, patchPowSchema, selectPowSchema } from "./pow.schema.js";
-import { notFoundSchema, POWS } from "../../lib/constants.js";
+import { insertPostSchema, patchPostSchema, selectPostSchema } from "./post.schema.js";
+import { notFoundSchema, POSTS } from "../../lib/constants.js";
 import { createErrorSchema, IdParamsSchema, jsonContent, jsonContentRequired } from "../../utils/schema.util.js";
 
-const pows = [POWS];
-const mainPath = `/${POWS}`;
+const posts = [POSTS];
+const mainPath = `/${POSTS}`;
 
 export const list = createRoute({
   path: mainPath,
   method: "get",
-  pows,
+  posts,
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
-      z.array(selectPowSchema),
-      "The list of pows",
-    ),
-  },
-});
-
-export const create = createRoute({
-  path: mainPath,
-  method: "post",
-  request: {
-    body: jsonContentRequired(
-      insertPowSchema,
-      "The pow to create",
-    ),
-  },
-  pows,
-  responses: {
-    [HttpStatusCodes.CREATED]: jsonContent(
-      selectPowSchema,
-      "The created pow",
-    ),
-    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
-      createErrorSchema(insertPowSchema),
-      "The validation error(s)",
+      z.array(selectPostSchema),
+      "The list of posts",
     ),
   },
 });
@@ -48,15 +26,15 @@ export const getOne = createRoute({
   request: {
     params: IdParamsSchema,
   },
-  pows,
+  posts,
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
-      selectPowSchema,
-      "The requested pow",
+      selectPostSchema,
+      "The requested post",
     ),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       notFoundSchema,
-      "Pow not found",
+      "Post not found",
     ),
     [HttpStatusCodes.BAD_REQUEST]: jsonContent(
       createErrorSchema(IdParamsSchema),
@@ -71,47 +49,24 @@ export const patch = createRoute({
   request: {
     params: IdParamsSchema,
     body: jsonContentRequired(
-      patchPowSchema,
-      "The pow updates",
+      patchPostSchema,
+      "The post updates",
     ),
   },
-  pows,
+  posts,
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
-      selectPowSchema,
-      "The updated pow",
+      selectPostSchema,
+      "The updated post",
     ),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       notFoundSchema,
-      "Pow not found",
+      "Post not found",
     ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
-      createErrorSchema(patchPowSchema)
+      createErrorSchema(patchPostSchema)
         .or(createErrorSchema(IdParamsSchema)),
       "The validation error(s)",
-    ),
-  },
-});
-
-export const revokePowNonce = createRoute({
-  path: `${mainPath}/{id}/revoke`,
-  method: "patch",
-  request: {
-    params: IdParamsSchema,
-  },
-  pows,
-  responses: {
-    [HttpStatusCodes.OK]: jsonContent(
-      selectPowSchema,
-      "The updated pow with revoked status",
-    ),
-    [HttpStatusCodes.NOT_FOUND]: jsonContent(
-      notFoundSchema,
-      "Pow not found",
-    ),
-    [HttpStatusCodes.BAD_REQUEST]: jsonContent(
-      createErrorSchema(IdParamsSchema),
-      "Invalid id error",
     ),
   },
 });
@@ -122,14 +77,14 @@ export const remove = createRoute({
   request: {
     params: IdParamsSchema,
   },
-  pows,
+  posts,
   responses: {
     [HttpStatusCodes.NO_CONTENT]: {
-      description: "Pow deleted",
+      description: "Post deleted",
     },
     [HttpStatusCodes.NOT_FOUND]: jsonContent(
       notFoundSchema,
-      "Pow not found",
+      "Post not found",
     ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
       createErrorSchema(IdParamsSchema),
@@ -138,9 +93,31 @@ export const remove = createRoute({
   },
 });
 
+export const create = createRoute({
+  path: mainPath,
+  method: "post",
+  request: {
+    body: jsonContentRequired(
+      insertPostSchema,
+      "The post to create",
+    ),
+  },
+  posts,
+  responses: {
+    [HttpStatusCodes.CREATED]: jsonContent(
+      selectPostSchema,
+      "The created post",
+    ),
+    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
+      createErrorSchema(insertPostSchema),
+      "The validation error(s)",
+    ),
+  },
+});
+
+
 export type ListRoute = typeof list;
 export type CreateRoute = typeof create;
 export type GetOneRoute = typeof getOne;
 export type PatchRoute = typeof patch;
 export type RemoveRoute = typeof remove;
-export type RevokePowNonceRoute = typeof revokePowNonce;

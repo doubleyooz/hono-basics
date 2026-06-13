@@ -8,6 +8,27 @@
       "when": 1781125353455,
       "tag": "0000_tough_hydra",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1781265305211,
+      "tag": "0001_wonderful_wendigo",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1781266351724,
+      "tag": "0002_unusual_orphan",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1781358463288,
+      "tag": "0003_flawless_mindworm",
+      "breakpoints": true
     }
   ]
 }

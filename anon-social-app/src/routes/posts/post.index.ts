@@ -1,6 +1,6 @@
 import { createRouter } from "../../lib/create-app.js";
-import * as controllers from "./pow.controller.js";
-import * as routes from "./pow.route.js";
+import * as controllers from "./post.controller.js";
+import * as routes from "./post.route.js";
 
 const router = createRouter()
   .openapi(routes.list, controllers.list)
@@ -8,6 +8,5 @@ const router = createRouter()
   .openapi(routes.getOne, controllers.getById)
   .openapi(routes.patch, controllers.update)
   .openapi(routes.remove, controllers.remove)
-  .openapi(routes.revokePowNonce, controllers.revokePowNonce);
 
 export default router;
