@@ -6,7 +6,7 @@ import { notFoundSchema, POSTS } from "../../lib/constants.js";
 import { createErrorSchema, IdParamsSchema, jsonContent, jsonContentRequired } from "../../utils/schema.util.js";
 
 const posts = [POSTS];
-const mainPath = `/${POSTS}`;
+const mainPath = `/${POSTS.toLowerCase()}`;
 
 export const list = createRoute({
   path: mainPath,

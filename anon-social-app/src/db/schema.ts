@@ -39,13 +39,24 @@ export const comments = sqliteTable('comments', {
 
 // Reactions
 export const reactions = sqliteTable('reactions', {
-  postId: text('post_id').notNull().references(() => posts.id),
+  // Can react to a post xOR a comment
+  postId: text('post_id').references(() => posts.id),
+  commentId: text('comment_id').references(() => comments.id),
+
   authorPubkey: text('author_pubkey').notNull().references(() => profiles.pubkey),
   kind: text('kind', { enum: ['like', 'heart', 'laugh', 'fire'] }).notNull(),
   visibility: integer('visibility').notNull().default(2), // default to public
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
 }, (table) => [
   primaryKey({ columns: [table.postId, table.authorPubkey, table.kind] }),
+  // Ensure exactly one of postId or commentId is set
+  check(
+    'check_reaction_target',
+    sql`(
+      (post_id IS NOT NULL AND comment_id IS NULL) OR 
+      (post_id IS NULL AND comment_id IS NOT NULL)
+    )`
+  ),
 ]);
 
 // Reports
