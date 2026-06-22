@@ -4,6 +4,7 @@ import { createMessageObjectSchema } from "../utils/schema.util.js";
 export const POWS = 'Pows'
 export const POSTS = 'Posts';
 export const PROFILES = 'Profiles';
+export const REPORTS = 'Reports';
 
 export const ZOD_ERROR_MESSAGES = {
   REQUIRED: "Required",

@@ -6,6 +6,7 @@ import indexRoutes from "./routes/index.route.js";
 import powRoutes from "./routes/pows/pow.index.js";
 import postRoutes from "./routes/posts/post.index.js"
 import profileRoutes from "./routes/profiles/profile.index.js";
+import reportRoutes from "./routes/reports/report.index.js";
 
 const app = createApp();
 const port = env.PORT | 3000;
@@ -15,6 +16,7 @@ const routes = [
   postRoutes,
   powRoutes,
   profileRoutes,
+  reportRoutes,
 ];
 
 routes.forEach((route) => {

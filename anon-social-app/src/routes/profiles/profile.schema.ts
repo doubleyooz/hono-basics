@@ -13,6 +13,7 @@ export const patchProfileSchema = insertProfileSchema.partial();
 export type CreateProfileRequest = z.infer<typeof insertProfileSchema>;
 
 export const selectProfileSchema = z.object({
+  id: z.string(),
   pubkey: z.string(),    
   displayName: z.string().nullable(),
   bio: z.string().min(1).max(1000).nullable(),
