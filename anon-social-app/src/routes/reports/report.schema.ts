@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 
-const cannotProvideBoth = (data: any) => {
+const cannotProvideBoth: (data) => boolean = (data: CreateReportRequest) => {
   const hasProfile = data.profilePubkey != null;
   const hasPost = data.postId != null;
   return !(hasProfile && hasPost);

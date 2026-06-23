@@ -1,5 +1,6 @@
 import { sql } from 'drizzle-orm';
 import { sqliteTable, text, integer, index, primaryKey, check, uniqueIndex } from 'drizzle-orm/sqlite-core';
+import { KINDS } from '../routes/reactions/reaction.schema.js';
 
 // Profiles
 export const profiles = sqliteTable('profiles', {
@@ -39,16 +40,17 @@ export const comments = sqliteTable('comments', {
 
 // Reactions
 export const reactions = sqliteTable('reactions', {
+
+  id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()), 
   // Can react to a post xOR a comment
   postId: text('post_id').references(() => posts.id),
   commentId: text('comment_id').references(() => comments.id),
 
   authorPubkey: text('author_pubkey').notNull().references(() => profiles.pubkey),
-  kind: text('kind', { enum: ['like', 'heart', 'laugh', 'fire'] }).notNull(),
+  kind: text('kind', { enum: KINDS }).notNull(),
   visibility: integer('visibility').notNull().default(2), // default to public
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
 }, (table) => [
-  primaryKey({ columns: [table.postId, table.authorPubkey, table.kind] }),
   // Ensure exactly one of postId or commentId is set
   check(
     'check_reaction_target',

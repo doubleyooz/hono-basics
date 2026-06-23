@@ -6,6 +6,7 @@ import indexRoutes from "./routes/index.route.js";
 import powRoutes from "./routes/pows/pow.index.js";
 import postRoutes from "./routes/posts/post.index.js"
 import profileRoutes from "./routes/profiles/profile.index.js";
+import reactionRoutes from "./routes/reactions/reaction.index.js";
 import reportRoutes from "./routes/reports/report.index.js";
 
 const app = createApp();
@@ -16,6 +17,7 @@ const routes = [
   postRoutes,
   powRoutes,
   profileRoutes,
+  reactionRoutes,
   reportRoutes,
 ];
 
